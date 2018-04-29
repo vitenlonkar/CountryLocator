@@ -1,0 +1,189 @@
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid" style=" border-radius:4px">
+
+    <div class="navbar-header">
+      <span class="navbar-brand" style="font-family: 'Georgia', serif; font-weight: normal; font-size: large">Country Reporter</span>
+    </div>
+
+  </div>
+</nav>
+<div class="container" style="background-color: #3e3a3a75">
+  <form>
+    <div class="form-group">
+      <table>
+        <tr>
+          <td class="custom-font">Search Country</td>
+          <td style="padding: 10px">
+            <input type="radio" name="radiogroup"
+                   (change)="onSelectionChange('queryMode')">
+          </td>
+
+
+          <td class="custom-font">Download Country Data</td>
+          <td style="padding: 10px">
+            <input type="radio" name="radiogroup"
+                   (change)="onSelectionChange('reportMode')">
+          </td>
+        </tr>
+      </table>
+    </div>
+  </form>
+  <div class="form-group" *ngIf="showQueryMode">
+    <!-- <label>Country: </label>-->
+    <ng-template #rt let-r="result" let-t="term">
+      {{r.name}}
+    </ng-template>
+    <input class="form-control" style="width: 25%;" [ngbTypeahead]="searchOnTypeAhead" [resultTemplate]="rt"
+           [inputFormatter]="formatter" (selectItem)="OnCountrySelect($event)"
+           placeholder="Country Name/code" >
+
+    <br>
+    <form>
+      <table>
+        <tr>
+          <td>
+            <div class="form-group">
+              <label class="custom-font">Country Name:  {{formData.name}} </label>
+            </div>
+          </td>
+          <td>
+            <div class="form-group">
+              <label class="custom-font">Continent: {{formData.continent}}  </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="form-group">
+              <label class="custom-font">Population: {{formData.population}}  </label>
+            </div>
+          </td>
+          <td>
+            <div class="form-group">
+              <label class="custom-font">Capitol: {{formData.capital}}  </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="form-group" >
+              <label class="custom-font">Spoken Languages:   </label>
+              <div class="custom-font" style=" word-wrap: break-word;"> {{formData.languages}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="form-group">
+              <label class="custom-font">Neighbouring Countries: {{formData.neighbours}} </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="form-group">
+              <label class="custom-font">Phone: {{formData.phone}} </label>
+            </div>
+          </td>
+          <td>
+            <div class="form-group">
+              <label class="custom-font">Country Code: {{formData.numeric}} </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="form-group">
+              <label class="custom-font">Postal Code Regex: {{formData.postal_code_regex}} </label>
+            </div>
+          </td>
+          <td>
+            <div class="form-group">
+              <label class="custom-font">Postal Code Format: {{formData.postal_code_format}} </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="form-group">
+              <label class="custom-font">2 Digit code: {{formData.alpha_2}} </label>
+            </div>
+          </td>
+          <td>
+            <div class="form-group">
+              <label class="custom-font">3 Digit code: {{formData.alpha_3}} </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="form-group">
+              <label class="custom-font">Fips: {{formData.fips}}  </label>
+            </div>
+          </td>
+          <td>
+            <div class="form-group">
+              <label class="custom-font">Geoname ID: {{formData.geoname_id}}  </label>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </form>
+
+    <!--
+          <ag-grid-angular style="height: 70px; width: 100%;" class="ag-theme-blue"
+                           [gridOptions]="gridOptions"></ag-grid-angular>
+    -->
+  </div>
+
+
+  <div *ngIf="showReportMode" >
+
+    <a href="{{apiURL}}/countryfinder/api/getReports" target="_blank"><i class="fa fa-file-excel-o fa-lg" aria-hidden="true"
+                                                                         title="Click to generate report" style="color: white;"></i></a>
+
+    <table>
+      <tr>
+        <td>
+          <nav class="navbar navbar-dark bg-dark" style="background-color: #343a4000 !important">
+            <div class="container-fluid" style=" border-radius:4px; height: 20px;">
+
+              <div class="navbar-header">
+                <span class="navbar-brand">Top 10 Countries having High population</span>
+              </div>
+
+            </div>
+          </nav>
+          <ag-grid-angular style="height: 250px; width: 100%;" class="ag-theme-dark"
+                           [gridOptions]="gridOptionsForMaxPop"></ag-grid-angular>
+        </td>
+        <td style="padding: 15px">
+          <nav class="navbar navbar-dark bg-dark" style="background-color: #343a4000 !important">
+            <div class="container-fluid" style=" border-radius:4px; height: 20px;">
+
+              <div class="navbar-header">
+                <span class="navbar-brand">Top 10 Countries having Low population</span>
+              </div>
+
+            </div>
+          </nav>
+          <ag-grid-angular style="height: 250px; width: 100%;" class="ag-theme-dark"
+                           [gridOptions]="gridOptionsForMinPop"></ag-grid-angular>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <nav class="navbar navbar-dark bg-dark" style="background-color: #343a4000 !important">
+            <div class="container-fluid" style=" border-radius:4px; height: 20px;">
+
+              <div class="navbar-header">
+                <span class="navbar-brand">Top 10 used currencies</span>
+              </div>
+
+            </div>
+          </nav>
+          <ag-grid-angular style="height: 250px; width: 100%;" class="ag-theme-dark"
+                           [gridOptions]="gridOptionsForCurrencies"></ag-grid-angular>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

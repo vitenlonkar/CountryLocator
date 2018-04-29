@@ -1,0 +1,8 @@
+/* You can add global styles to this file, and also import other style files */
+
+.custom-font{
+  font-size: 15px;
+  font-weight: normal;
+  font-family: "Georgia", serif;
+  color: #fff;
+}
