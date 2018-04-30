@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 public class CountryFinderServiceTest {
 
     @InjectMocks
-    CountryFinderService countryFinderService ;
+    CountryFinderService countryFinderService;
 
     @Mock
     CountryFinderDao countryFinderDao;
@@ -38,24 +38,24 @@ public class CountryFinderServiceTest {
 
     @Test
     public void testGetCountryList() throws CountryFinderException {
-        CountryRequest countryRequest =  new CountryRequest();
+        CountryRequest countryRequest = new CountryRequest();
         countryRequest.setSearchText("Ind");
         when(countryFinderDao.getCountryList(CaseConverter.camelCase(countryRequest.getSearchText()))).thenReturn(countryResponse);
         countryFinderService.getCountryList(countryRequest);
-
     }
+
     @Test
     public void testGetCountryWithMaxPopulation() throws CountryFinderException {
         when(countryFinderDao.getCountryWithMaxPopulation()).thenReturn(countryResponse);
         countryFinderService.getCountryWithMaxPopulation();
-
     }
+
     @Test
     public void testGetCountryWithMinPopulation() throws CountryFinderException {
         when(countryFinderDao.getCountryWithMinPopulation()).thenReturn(countryResponse);
         countryFinderService.getCountryWithMinPopulation();
-
     }
+
     @Test
     public void testGetMaxCurrenciesUsed() throws CountryFinderException {
         when(countryFinderDao.getMaxCurrenciesUsed()).thenReturn(countryResponse);
